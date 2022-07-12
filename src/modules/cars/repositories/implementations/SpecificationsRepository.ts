@@ -5,8 +5,19 @@ import { ISpecificationsRepository } from "../ISpecificationsRepository";
 class SpecificationsRepository implements ISpecificationsRepository {
   private specifications: Specification[];
 
-  constructor() {
+  // eslint-disable-next-line no-use-before-define
+  private static INSTANCE: SpecificationsRepository;
+
+  private constructor() {
     this.specifications = [];
+  }
+
+  public static getInstance(): SpecificationsRepository {
+    if (!SpecificationsRepository.INSTANCE) {
+      SpecificationsRepository.INSTANCE = new SpecificationsRepository();
+    }
+
+    return SpecificationsRepository.INSTANCE;
   }
 
   create({ description, name }: ICreateCategoryDTO) {
